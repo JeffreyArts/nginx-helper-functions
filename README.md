@@ -47,4 +47,9 @@ This will disable a website, <site> should refer to the filename of the website 
 ```
   create_static_site <site>
 ```
-This will create a website in the `sites-available` directory with the filename <site>. It will also prompt you where the location of the static website (/var/www/(...)) is located
+This will create the configuration for a website in the `sites-available` directory with the filename <site>. It will also prompt you where the location of the static website (/var/www/(...)) is located
+
+```
+  create_strapi_site <site>
+```
+This will create the configuration for a Strapi application in the `sites-available` directory with the filename <site>. It will also prompt you where the location of the strapi application (/var/www/(...)) is located
