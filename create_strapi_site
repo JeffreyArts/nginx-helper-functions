@@ -1,0 +1,53 @@
+#! /bin/sh
+
+# Get domain name from parameter
+domain="$1"
+
+# Check if domain is defined
+if [ -z "$domain" ]; then
+    echo "Error: domain name is not defined"
+    return 1
+fi
+
+# Prompt for directory where Strapi is deployed
+echo -n "Enter the directory where Strapi is deployed: "
+read dir
+
+# Check if directory exists
+if [ ! -d "$dir" ]; then
+    echo "Error: directory does not exist"
+    return 1
+fi
+
+# Create new virtual host configuration file
+sudo tee /etc/nginx/sites-available/"$domain" > /dev/null << EOF
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name $domain;
+
+    location / {
+        proxy_pass http://localhost:1337;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+    }
+}
+EOF
+
+# Create symbolic link to file in sites-enabled directory
+sudo ln -s /etc/nginx/sites-available/"$domain" /etc/nginx/sites-enabled/
+
+# Test Nginx configuration syntax
+sudo nginx -t
+
+# Reload Nginx service to apply new configuration
+sudo systemctl reload nginx
+
+# Obtain SSL certificate using Certbot
+sudo certbot --nginx -d "$domain"
+
+echo "Virtual host for Strapi has been created and enabled"
