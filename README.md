@@ -6,11 +6,11 @@ This repo contains several scripts to help configure NGINX. It requires to have 
 
 ### Quick way
 
-This downloads the scripts, and tries to install it via your bash_profile.
+This downloads the scripts, and tries to install it via your bashrc.
 
-`if [ ! -d ~/bin ]; then mkdir ~/bin; echo "export PATH=\$PATH:~/bin" >> ~/.bash_profile; fi && cd ~ && git clone https://github.com/JeffreyArts/nginx-helper-functions.git && cp nginx-helper-functions/* ~/bin/ && chmod +x ~/bin/* && source ~/.bash_profile`
+`if [ ! -d ~/bin ]; then mkdir ~/bin; echo "export PATH=\$PATH:~/bin" >> ~/.bashrc; fi && cd ~ && git clone https://github.com/JeffreyArts/nginx-helper-functions.git && cp nginx-helper-functions/* ~/bin/ && chmod +x ~/bin/* && source ~/.bashrc`
 
-If this does not work, please check if the line `PATH=\$PATH:~/bin` is located in your `~/.bash_profile` (and add it if not). For more debugging check de detailed instructions below.
+If this does not work, please check if the line `PATH=\$PATH:~/bin` is located in your `~/.bashrc` (and add it if not). For more debugging check de detailed instructions below.
 
 ### Detailed
 
@@ -22,13 +22,13 @@ If this does not work, please check if the line `PATH=\$PATH:~/bin` is located i
 
 4. Make the scripts executable using the command `chmod +x ~/bin/*`.
 
-5. Open your shell profile file using the command `nano ~/.bash_profile` (if you're using bash) or `nano ~/.zshrc` (if you're using zsh).
+5. Open your shell profile file using the command `nano ~/.bashrc` (if you're using bash) or `nano ~/.zshrc` (if you're using zsh).
 
 6. Add the following line to the file: `export PATH=$PATH:~/bin`.
 
 7. Save the changes and close the file.
 
-8. Reload your shell profile using the command `source ~/.bash_profile` (if you're using bash) or `source ~/.zshrc` (if you're using zsh).
+8. Reload your shell profile using the command `source ~/.bashrc` (if you're using bash) or `source ~/.zshrc` (if you're using zsh).
 
 Now, the `add_site`, `disable_site`, and `create_static_site` scripts should be available for use from any directory on your machine.
 
