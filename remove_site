@@ -1,0 +1,24 @@
+#! /bin/sh
+
+# Check if filename argument was provided
+if [ -z "$1" ]; then
+    echo "Usage: remove_site <filename>"
+    return 1
+fi
+
+# Check if the file exists in the sites-enabled directory
+if [ ! -f "/etc/nginx/sites-enabled/$1" ]; then
+    echo "Error: file does not exist in /etc/nginx/sites-enabled/"
+    return 1
+fi
+
+# Remove symbolic link to file in sites-enabled directory
+sudo rm /etc/nginx/sites-enabled/"$1"
+
+# Test Nginx configuration syntax
+sudo nginx -t
+
+# Reload Nginx service to apply new configuration
+sudo systemctl reload nginx
+
+echo "Virtual host $1 has been disabled"

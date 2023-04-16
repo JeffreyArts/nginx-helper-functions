@@ -1,0 +1,24 @@
+#! /bin/sh
+
+# Check if filename argument was provided
+if [ -z "$1" ]; then
+    echo "Usage: add_site <filename>"
+    return 1
+fi
+
+# Check if the file exists in the sites-available directory
+if [ ! -f "/etc/nginx/sites-available/$1" ]; then
+    echo "Error: file does not exist in /etc/nginx/sites-available/"
+    return 1
+fi
+
+# Create symbolic link to file in sites-enabled directory
+sudo ln -s /etc/nginx/sites-available/"$1" /etc/nginx/sites-enabled/
+
+# Test Nginx configuration syntax
+sudo nginx -t
+
+# Reload Nginx service to apply new configuration
+sudo systemctl reload nginx
+
+echo "Virtual host $1 has been enabled"
